@@ -1,4 +1,4 @@
-<div class="apidocDiv">
+<html><head></head><body><div class="apidocDiv">
 <style>
 /*csslint
 */
@@ -47,17 +47,10 @@
 }
 </style>
 <h1>api documentation for
-    <a
-
-        href="https://github.com/mozilla/source-map"
-
-    >source-map (v0.5.6)</a>
+    <a href="https://github.com/mozilla/source-map">source-map (v0.5.6)</a>
 </h1>
 <h4>Generates and consumes source maps</h4>
-<div class="apidocSectionDiv"><a
-    href="#apidoc.tableOfContents"
-    id="apidoc.tableOfContents"
-><h1>table of contents</h1></a><ol>
+<div class="apidocSectionDiv"><a href="#apidoc.tableOfContents" id="apidoc.tableOfContents"><h1>table of contents</h1></a><ol>
 
     <li class="apidocModuleLi"><a href="#apidoc.module.source-map">module source-map</a><ol>
 
@@ -1303,8 +1296,8 @@
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function SourceMapConsumer(aSourceMap) {
   var sourceMap = aSourceMap;
-  if (typeof aSourceMap === &#x27;string&#x27;) {
-    sourceMap = JSON.parse(aSourceMap.replace(/^\)\]\}&#x27;/, &#x27;&#x27;));
+  if (typeof aSourceMap === 'string') {
+    sourceMap = JSON.parse(aSourceMap.replace(/^\)\]\}'/, ''));
   }
 
   return sourceMap.sections != null
@@ -1355,7 +1348,7 @@ inclusive.
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function SourceMapConsumer_charIsMappingSeparator(aStr, index) {
   var c = aStr.charAt(index);
-  return c === &#x22;;&#x22; || c === &#x22;,&#x22;;
+  return c === ";" || c === ",";
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -1370,7 +1363,7 @@ inclusive.
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function SourceMapConsumer_parseMappings(aStr, aSourceRoot) {
-  throw new Error(&#x22;Subclasses must implement _parseMappings&#x22;);
+  throw new Error("Subclasses must implement _parseMappings");
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -1385,16 +1378,16 @@ inclusive.
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function SourceMapConsumer_allGeneratedPositionsFor(aArgs) {
-  var line = util.getArg(aArgs, &#x27;line&#x27;);
+  var line = util.getArg(aArgs, 'line');
 
   // When there is no exact match, BasicSourceMapConsumer.prototype._findMapping
   // returns the index of the closest mapping less than the needle. By
   // setting needle.originalColumn to 0, we thus find the last mapping for
   // the given line, provided such a mapping exists.
   var needle = {
-    source: util.getArg(aArgs, &#x27;source&#x27;),
+    source: util.getArg(aArgs, 'source'),
     originalLine: line,
-    originalColumn: util.getArg(aArgs, &#x27;column&#x27;, 0)
+    originalColumn: util.getArg(aArgs, 'column', 0)
   };
 
   if (this.sourceRoot != null) {
@@ -1409,11 +1402,11 @@ inclusive.
 
   var index = this._findMapping(needle,
                                 this._originalMappings,
-                                &#x22;originalLine&#x22;,
-                                &#x22;originalColumn&#x22;,
+                                "originalLine",
+                                "originalColumn",
                                 util.compareByOriginalPositions,
                                 binarySearch.LEAST_UPPER_BOUND);
-  if (index &#x3e;= 0) {
+  if (index &gt;= 0) {
     var mapping = this._originalMappings[index];
 
     if (aArgs.column === undefined) {
@@ -1423,11 +1416,11 @@ inclusive.
       // a mapping for a different line than the one we found. Since
       // mappings are sorted, this is guaranteed to find all mappings for
       // the line we found.
-      while (mapping &#x26;&#x26; mapping.originalLine === originalLine) {
+      while (mapping &amp;&amp; mapping.originalLine === originalLine) {
         mappings.push({
-          line: util.getArg(mapping, &#x27;generatedLine&#x27;, null),
-          column: util.getArg(mapping, &#x27;generatedColumn&#x27;, null),
-          lastColumn: util.getArg(mapping, &#x27;lastGeneratedColumn&#x27;, null)
+          line: util.getArg(mapping, 'generatedLine', null),
+          column: util.getArg(mapping, 'generatedColumn', null),
+          lastColumn: util.getArg(mapping, 'lastGeneratedColumn', null)
         });
 
         mapping = this._originalMappings[++index];
@@ -1439,13 +1432,13 @@ inclusive.
       // a mapping for a different line than the one we were searching for.
       // Since mappings are sorted, this is guaranteed to find all mappings for
       // the line we are searching for.
-      while (mapping &#x26;&#x26;
-             mapping.originalLine === line &#x26;&#x26;
+      while (mapping &amp;&amp;
+             mapping.originalLine === line &amp;&amp;
              mapping.originalColumn == originalColumn) {
         mappings.push({
-          line: util.getArg(mapping, &#x27;generatedLine&#x27;, null),
-          column: util.getArg(mapping, &#x27;generatedColumn&#x27;, null),
-          lastColumn: util.getArg(mapping, &#x27;lastGeneratedColumn&#x27;, null)
+          line: util.getArg(mapping, 'generatedLine', null),
+          column: util.getArg(mapping, 'generatedColumn', null),
+          lastColumn: util.getArg(mapping, 'lastGeneratedColumn', null)
         });
 
         mapping = this._originalMappings[++index];
@@ -1480,13 +1473,13 @@ inclusive.
     mappings = this._originalMappings;
     break;
   default:
-    throw new Error(&#x22;Unknown order of iteration.&#x22;);
+    throw new Error("Unknown order of iteration.");
   }
 
   var sourceRoot = this.sourceRoot;
   mappings.map(function (mapping) {
     var source = mapping.source === null ? null : this._sources.at(mapping.source);
-    if (source != null &#x26;&#x26; sourceRoot != null) {
+    if (source != null &amp;&amp; sourceRoot != null) {
       source = util.join(sourceRoot, source);
     }
     return {
@@ -1515,9 +1508,9 @@ inclusive.
   if (!aArgs) {
     aArgs = {};
   }
-  this._file = util.getArg(aArgs, &#x27;file&#x27;, null);
-  this._sourceRoot = util.getArg(aArgs, &#x27;sourceRoot&#x27;, null);
-  this._skipValidation = util.getArg(aArgs, &#x27;skipValidation&#x27;, false);
+  this._file = util.getArg(aArgs, 'file', null);
+  this._sourceRoot = util.getArg(aArgs, 'sourceRoot', null);
+  this._skipValidation = util.getArg(aArgs, 'skipValidation', false);
   this._sources = new ArraySet();
   this._names = new ArraySet();
   this._mappings = new MappingList();
@@ -1532,8 +1525,8 @@ inclusive.
 
 ```js
 var generator = new sourceMap.<span class="apidocCodeKeywordSpan">SourceMapGenerator</span>({
-  file: &#x22;my-generated-javascript-file.js&#x22;,
-  sourceRoot: &#x22;http://example.com/app/js/&#x22;
+  file: "my-generated-javascript-file.js",
+  sourceRoot: "http://example.com/app/js/"
 });
 ```
 
@@ -1604,7 +1597,7 @@ var generator = sourceMap.<span class="apidocCodeKeywordSpan">SourceMapGenerator
 #### SourceMapGenerator.prototype.addMapping(mapping)
 
 Add a single mapping from original source line and column to the generated
-source&#x27;s line and column for this source map being created. The mapping object
+source's line and column for this source map being created. The mapping object
 should have the following properties:
 ...</pre></li>
     </ul>
@@ -1651,30 +1644,30 @@ should have the following properties:
   var previousOriginalLine = 0;
   var previousName = 0;
   var previousSource = 0;
-  var result = &#x27;&#x27;;
+  var result = '';
   var next;
   var mapping;
   var nameIdx;
   var sourceIdx;
 
   var mappings = this._mappings.toArray();
-  for (var i = 0, len = mappings.length; i &#x3c; len; i++) {
+  for (var i = 0, len = mappings.length; i &lt; len; i++) {
     mapping = mappings[i];
-    next = &#x27;&#x27;
+    next = ''
 
     if (mapping.generatedLine !== previousGeneratedLine) {
       previousGeneratedColumn = 0;
       while (mapping.generatedLine !== previousGeneratedLine) {
-        next += &#x27;;&#x27;;
+        next += ';';
         previousGeneratedLine++;
       }
     }
     else {
-      if (i &#x3e; 0) {
+      if (i &gt; 0) {
         if (!util.compareByGeneratedPositionsInflated(mapping, mappings[i - 1])) {
           continue;
         }
-        next += &#x27;,&#x27;;
+        next += ',';
       }
     }
 
@@ -1721,22 +1714,22 @@ should have the following properties:
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function SourceMapGenerator_validateMapping(aGenerated, aOriginal, aSource, aName) {
-  if (aGenerated &#x26;&#x26; &#x27;line&#x27; in aGenerated &#x26;&#x26; &#x27;column&#x27; in aGenerated
-      &#x26;&#x26; aGenerated.line &#x3e; 0 &#x26;&#x26; aGenerated.column &#x3e;= 0
-      &#x26;&#x26; !aOriginal &#x26;&#x26; !aSource &#x26;&#x26; !aName) {
+  if (aGenerated &amp;&amp; 'line' in aGenerated &amp;&amp; 'column' in aGenerated
+      &amp;&amp; aGenerated.line &gt; 0 &amp;&amp; aGenerated.column &gt;= 0
+      &amp;&amp; !aOriginal &amp;&amp; !aSource &amp;&amp; !aName) {
     // Case 1.
     return;
   }
-  else if (aGenerated &#x26;&#x26; &#x27;line&#x27; in aGenerated &#x26;&#x26; &#x27;column&#x27; in aGenerated
-           &#x26;&#x26; aOriginal &#x26;&#x26; &#x27;line&#x27; in aOriginal &#x26;&#x26; &#x27;column&#x27; in aOriginal
-           &#x26;&#x26; aGenerated.line &#x3e; 0 &#x26;&#x26; aGenerated.column &#x3e;= 0
-           &#x26;&#x26; aOriginal.line &#x3e; 0 &#x26;&#x26; aOriginal.column &#x3e;= 0
-           &#x26;&#x26; aSource) {
+  else if (aGenerated &amp;&amp; 'line' in aGenerated &amp;&amp; 'column' in aGenerated
+           &amp;&amp; aOriginal &amp;&amp; 'line' in aOriginal &amp;&amp; 'column' in aOriginal
+           &amp;&amp; aGenerated.line &gt; 0 &amp;&amp; aGenerated.column &gt;= 0
+           &amp;&amp; aOriginal.line &gt; 0 &amp;&amp; aOriginal.column &gt;= 0
+           &amp;&amp; aSource) {
     // Cases 2 and 3.
     return;
   }
   else {
-    throw new Error(&#x27;Invalid mapping: &#x27; + JSON.stringify({
+    throw new Error('Invalid mapping: ' + JSON.stringify({
       generated: aGenerated,
       source: aSource,
       original: aOriginal,
@@ -1757,10 +1750,10 @@ should have the following properties:
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function SourceMapGenerator_addMapping(aArgs) {
-  var generated = util.getArg(aArgs, &#x27;generated&#x27;);
-  var original = util.getArg(aArgs, &#x27;original&#x27;, null);
-  var source = util.getArg(aArgs, &#x27;source&#x27;, null);
-  var name = util.getArg(aArgs, &#x27;name&#x27;, null);
+  var generated = util.getArg(aArgs, 'generated');
+  var original = util.getArg(aArgs, 'original', null);
+  var source = util.getArg(aArgs, 'source', null);
+  var name = util.getArg(aArgs, 'name', null);
 
   if (!this._skipValidation) {
     this._validateMapping(generated, original, source, name);
@@ -1783,8 +1776,8 @@ should have the following properties:
   this._mappings.add({
     generatedLine: generated.line,
     generatedColumn: generated.column,
-    originalLine: original != null &#x26;&#x26; original.line,
-    originalColumn: original != null &#x26;&#x26; original.column,
+    originalLine: original != null &amp;&amp; original.line,
+    originalColumn: original != null &amp;&amp; original.column,
     source: source,
     name: name
   });
@@ -1807,14 +1800,14 @@ should have the following properties:
   if (aSourceFile == null) {
     if (aSourceMapConsumer.file == null) {
       throw new Error(
-        &#x27;SourceMapGenerator.prototype.applySourceMap requires either an explicit source file, &#x27; +
-        &#x27;or the source map\&#x27;s &#x22;file&#x22; property. Both were omitted.&#x27;
+        'SourceMapGenerator.prototype.applySourceMap requires either an explicit source file, ' +
+        'or the source map\'s "file" property. Both were omitted.'
       );
     }
     sourceFile = aSourceMapConsumer.file;
   }
   var sourceRoot = this._sourceRoot;
-  // Make &#x22;sourceFile&#x22; relative if an absolute Url is passed.
+  // Make "sourceFile" relative if an absolute Url is passed.
   if (sourceRoot != null) {
     sourceFile = util.relative(sourceRoot, sourceFile);
   }
@@ -1823,9 +1816,9 @@ should have the following properties:
   var newSources = new ArraySet();
   var newNames = new ArraySet();
 
-  // Find mappings for the &#x22;sourceFile&#x22;
+  // Find mappings for the "sourceFile"
   this._mappings.unsortedForEach(function (mapping) {
-    if (mapping.source === sourceFile &#x26;&#x26; mapping.originalLine != null) {
+    if (mapping.source === sourceFile &amp;&amp; mapping.originalLine != null) {
       // Check if it can be mapped by the source map, then update the mapping.
       var original = aSourceMapConsumer.originalPositionFor({
         line: mapping.originalLine,
@@ -1849,12 +1842,12 @@ should have the following properties:
     }
 
     var source = mapping.source;
-    if (source != null &#x26;&#x26; !newSources.has(source)) {
+    if (source != null &amp;&amp; !newSources.has(source)) {
       newSources.add(source);
     }
 
     var name = mapping.name;
-    if (name != null &#x26;&#x26; !newNames.has(name)) {
+    if (name != null &amp;&amp; !newNames.has(name)) {
       newNames.add(name);
     }
 
@@ -2003,11 +1996,11 @@ should have the following properties:
   var shiftNextLine = function() {
     var lineContents = remainingLines.shift();
     // The last line of a file might not have a newline.
-    var newLine = remainingLines.shift() || &#x22;&#x22;;
+    var newLine = remainingLines.shift() || "";
     return lineContents + newLine;
   };
 
-  // We need to remember the position of &#x22;remainingLines&#x22;
+  // We need to remember the position of "remainingLines"
   var lastGeneratedLine = 1, lastGeneratedColumn = 0;
 
   // The generate SourceNodes we need a code range.
@@ -2017,18 +2010,18 @@ should have the following properties:
 
   aSourceMapConsumer.eachMapping(function (mapping) {
     if (lastMapping !== null) {
-      // We add the code from &#x22;lastMapping&#x22; to &#x22;mapping&#x22;:
+      // We add the code from "lastMapping" to "mapping":
       // First check if there is a new line in between.
-      if (lastGeneratedLine &#x3c; mapping.generatedLine) {
-        // Associate first line with &#x22;lastMapping&#x22;
+      if (lastGeneratedLine &lt; mapping.generatedLine) {
+        // Associate first line with "lastMapping"
         addMappingWithCode(lastMapping, shiftNextLine());
         lastGeneratedLine++;
         lastGeneratedColumn = 0;
         // The remaining code is added without mapping
       } else {
         // There is no new line in between.
-        // Associate the code between &#x22;lastGeneratedColumn&#x22; and
-        // &#x22;mapping.generatedColumn&#x22; with &#x22;lastMapping&#x22;
+        // Associate the code between "lastGeneratedColumn" and
+        // "mapping.generatedColumn" with "lastMapping"
         var nextLine = remainingLines[0];
         var code = nextLine.substr(0, mapping.generatedColumn -
                                       lastGeneratedColumn);
@@ -2044,11 +2037,11 @@ should have the following properties:
     // We add the generated code until the first mapping
     // to the SourceNode without any mapping.
     // Each line is added as separate string.
-    while (lastGeneratedLine &#x3c; mapping.generatedLine) {
+    while (lastGeneratedLine &lt; mapping.generatedLine) {
       node.add(shiftNextLine());
       lastGeneratedLine++;
     }
-    if (lastGeneratedColumn &#x3c; mapping.generatedColumn) {
+    if (lastGeneratedColumn &lt; mapping.generatedColumn) {
       var nextLine = remainingLines[0];
       node.add(nextLine.substr(0, mapping.generatedColumn));
       remainingLines[0] = nextLine.substr(mapping.generatedColumn);
@@ -2057,13 +2050,13 @@ should have the following properties:
     lastMapping = mapping;
   }, this);
   // We have processed all mappings.
-  if (remainingLines.length &#x3e; 0) {
+  if (remainingLines.length &gt; 0) {
     if (lastMapping) {
-      // Associate the remaining code in the current line with &#x22;lastMapping&#x22;
+      // Associate the remaining code in the current line with "lastMapping"
       addMappingWithCode(lastMapping, shiftNextLine());
     }
     // and add the remaining lines without any mapping
-    node.add(remainingLines.join(&#x22;&#x22;));
+    node.add(remainingLines.join(""));
   }
 
   // Copy sourcesContent into SourceNode
@@ -2112,14 +2105,14 @@ should have the following properties:
       this.add(chunk);
     }, this);
   }
-  else if (aChunk[isSourceNode] || typeof aChunk === &#x22;string&#x22;) {
+  else if (aChunk[isSourceNode] || typeof aChunk === "string") {
     if (aChunk) {
       this.children.push(aChunk);
     }
   }
   else {
     throw new TypeError(
-      &#x22;Expected a SourceNode, string, or an array of SourceNodes and strings. Got &#x22; + aChunk
+      "Expected a SourceNode, string, or an array of SourceNodes and strings. Got " + aChunk
     );
   }
   return this;
@@ -2140,9 +2133,9 @@ should have the following properties:
   var newChildren;
   var i;
   var len = this.children.length;
-  if (len &#x3e; 0) {
+  if (len &gt; 0) {
     newChildren = [];
-    for (i = 0; i &#x3c; len-1; i++) {
+    for (i = 0; i &lt; len-1; i++) {
       newChildren.push(this.children[i]);
       newChildren.push(aSep);
     }
@@ -2165,16 +2158,16 @@ should have the following properties:
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function SourceNode_prepend(aChunk) {
   if (Array.isArray(aChunk)) {
-    for (var i = aChunk.length-1; i &#x3e;= 0; i--) {
+    for (var i = aChunk.length-1; i &gt;= 0; i--) {
       this.prepend(aChunk[i]);
     }
   }
-  else if (aChunk[isSourceNode] || typeof aChunk === &#x22;string&#x22;) {
+  else if (aChunk[isSourceNode] || typeof aChunk === "string") {
     this.children.unshift(aChunk);
   }
   else {
     throw new TypeError(
-      &#x22;Expected a SourceNode, string, or an array of SourceNodes and strings. Got &#x22; + aChunk
+      "Expected a SourceNode, string, or an array of SourceNodes and strings. Got " + aChunk
     );
   }
   return this;
@@ -2196,11 +2189,11 @@ should have the following properties:
   if (lastChild[isSourceNode]) {
     lastChild.replaceRight(aPattern, aReplacement);
   }
-  else if (typeof lastChild === &#x27;string&#x27;) {
+  else if (typeof lastChild === 'string') {
     this.children[this.children.length - 1] = lastChild.replace(aPattern, aReplacement);
   }
   else {
-    this.children.push(&#x27;&#x27;.replace(aPattern, aReplacement));
+    this.children.push(''.replace(aPattern, aReplacement));
   }
   return this;
 }</pre></li>
@@ -2232,7 +2225,7 @@ should have the following properties:
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function SourceNode_toString() {
-  var str = &#x22;&#x22;;
+  var str = "";
   this.walk(function (chunk) {
     str += chunk;
   });
@@ -2252,7 +2245,7 @@ should have the following properties:
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function SourceNode_toStringWithSourceMap(aArgs) {
   var generated = {
-    code: &#x22;&#x22;,
+    code: "",
     line: 1,
     column: 0
   };
@@ -2265,8 +2258,8 @@ should have the following properties:
   this.walk(function (chunk, original) {
     generated.code += chunk;
     if (original.source !== null
-        &#x26;&#x26; original.line !== null
-        &#x26;&#x26; original.column !== null) {
+        &amp;&amp; original.line !== null
+        &amp;&amp; original.column !== null) {
       if(lastOriginalSource !== original.source
          || lastOriginalLine !== original.line
          || lastOriginalColumn !== original.column
@@ -2299,7 +2292,7 @@ should have the following properties:
       lastOriginalSource = null;
       sourceMappingActive = false;
     }
-    for (var idx = 0, length = chunk.length; idx &#x3c; length; idx++) {
+    for (var idx = 0, length = chunk.length; idx &lt; length; idx++) {
       if (chunk.charCodeAt(idx) === NEWLINE_CODE) {
         generated.line++;
         generated.column = 0;
@@ -2346,13 +2339,13 @@ should have the following properties:
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function SourceNode_walk(aFn) {
   var chunk;
-  for (var i = 0, len = this.children.length; i &#x3c; len; i++) {
+  for (var i = 0, len = this.children.length; i &lt; len; i++) {
     chunk = this.children[i];
     if (chunk[isSourceNode]) {
       chunk.walk(aFn);
     }
     else {
-      if (chunk !== &#x27;&#x27;) {
+      if (chunk !== '') {
         aFn(chunk, { source: this.source,
                      line: this.line,
                      column: this.column,
@@ -2374,14 +2367,14 @@ should have the following properties:
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function SourceNode_walkSourceContents(aFn) {
-  for (var i = 0, len = this.children.length; i &#x3c; len; i++) {
+  for (var i = 0, len = this.children.length; i &lt; len; i++) {
     if (this.children[i][isSourceNode]) {
       this.children[i].walkSourceContents(aFn);
     }
   }
 
   var sources = Object.keys(this.sourceContents);
-  for (var i = 0, len = sources.length; i &#x3c; len; i++) {
+  for (var i = 0, len = sources.length; i &lt; len; i++) {
     aFn(util.fromSetString(sources[i]), this.sourceContents[sources[i]]);
   }
 }</pre></li>
@@ -2430,8 +2423,8 @@ should have the following properties:
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function SourceMapConsumer(aSourceMap) {
   var sourceMap = aSourceMap;
-  if (typeof aSourceMap === &#x27;string&#x27;) {
-    sourceMap = JSON.parse(aSourceMap.replace(/^\)\]\}&#x27;/, &#x27;&#x27;));
+  if (typeof aSourceMap === 'string') {
+    sourceMap = JSON.parse(aSourceMap.replace(/^\)\]\}'/, ''));
   }
 
   return sourceMap.sections != null
@@ -2563,7 +2556,7 @@ inclusive.
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function SourceMapConsumer_charIsMappingSeparator(aStr, index) {
   var c = aStr.charAt(index);
-  return c === &#x22;;&#x22; || c === &#x22;,&#x22;;
+  return c === ";" || c === ",";
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
 
@@ -2572,7 +2565,7 @@ inclusive.
 // fact by caching the parsed variable length fields of each segment,
 // allowing us to avoid a second parse if we encounter the same
 // segment again.
-for (end = index; end &#x3c; length; end++) {
+for (end = index; end &lt; length; end++) {
   if (this.<span class="apidocCodeKeywordSpan">_charIsMappingSeparator</span>(aStr, end)) {
     break;
   }
@@ -2594,14 +2587,14 @@ if (segment) {
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function SourceMapConsumer_parseMappings(aStr, aSourceRoot) {
-  throw new Error(&#x22;Subclasses must implement _parseMappings&#x22;);
+  throw new Error("Subclasses must implement _parseMappings");
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
 //
 // `_originalMappings` is ordered by the original positions.
 
 SourceMapConsumer.prototype.__generatedMappings = null;
-Object.defineProperty(SourceMapConsumer.prototype, &#x27;_generatedMappings&#x27;, {
+Object.defineProperty(SourceMapConsumer.prototype, '_generatedMappings', {
   get: function () {
     if (!this.__generatedMappings) {
       this.<span class="apidocCodeKeywordSpan">_parseMappings</span>(this._mappings, this.sourceRoot);
@@ -2625,16 +2618,16 @@ SourceMapConsumer.prototype.__originalMappings = null;
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function SourceMapConsumer_allGeneratedPositionsFor(aArgs) {
-  var line = util.getArg(aArgs, &#x27;line&#x27;);
+  var line = util.getArg(aArgs, 'line');
 
   // When there is no exact match, BasicSourceMapConsumer.prototype._findMapping
   // returns the index of the closest mapping less than the needle. By
   // setting needle.originalColumn to 0, we thus find the last mapping for
   // the given line, provided such a mapping exists.
   var needle = {
-    source: util.getArg(aArgs, &#x27;source&#x27;),
+    source: util.getArg(aArgs, 'source'),
     originalLine: line,
-    originalColumn: util.getArg(aArgs, &#x27;column&#x27;, 0)
+    originalColumn: util.getArg(aArgs, 'column', 0)
   };
 
   if (this.sourceRoot != null) {
@@ -2649,11 +2642,11 @@ SourceMapConsumer.prototype.__originalMappings = null;
 
   var index = this._findMapping(needle,
                                 this._originalMappings,
-                                &#x22;originalLine&#x22;,
-                                &#x22;originalColumn&#x22;,
+                                "originalLine",
+                                "originalColumn",
                                 util.compareByOriginalPositions,
                                 binarySearch.LEAST_UPPER_BOUND);
-  if (index &#x3e;= 0) {
+  if (index &gt;= 0) {
     var mapping = this._originalMappings[index];
 
     if (aArgs.column === undefined) {
@@ -2663,11 +2656,11 @@ SourceMapConsumer.prototype.__originalMappings = null;
       // a mapping for a different line than the one we found. Since
       // mappings are sorted, this is guaranteed to find all mappings for
       // the line we found.
-      while (mapping &#x26;&#x26; mapping.originalLine === originalLine) {
+      while (mapping &amp;&amp; mapping.originalLine === originalLine) {
         mappings.push({
-          line: util.getArg(mapping, &#x27;generatedLine&#x27;, null),
-          column: util.getArg(mapping, &#x27;generatedColumn&#x27;, null),
-          lastColumn: util.getArg(mapping, &#x27;lastGeneratedColumn&#x27;, null)
+          line: util.getArg(mapping, 'generatedLine', null),
+          column: util.getArg(mapping, 'generatedColumn', null),
+          lastColumn: util.getArg(mapping, 'lastGeneratedColumn', null)
         });
 
         mapping = this._originalMappings[++index];
@@ -2679,13 +2672,13 @@ SourceMapConsumer.prototype.__originalMappings = null;
       // a mapping for a different line than the one we were searching for.
       // Since mappings are sorted, this is guaranteed to find all mappings for
       // the line we are searching for.
-      while (mapping &#x26;&#x26;
-             mapping.originalLine === line &#x26;&#x26;
+      while (mapping &amp;&amp;
+             mapping.originalLine === line &amp;&amp;
              mapping.originalColumn == originalColumn) {
         mappings.push({
-          line: util.getArg(mapping, &#x27;generatedLine&#x27;, null),
-          column: util.getArg(mapping, &#x27;generatedColumn&#x27;, null),
-          lastColumn: util.getArg(mapping, &#x27;lastGeneratedColumn&#x27;, null)
+          line: util.getArg(mapping, 'generatedLine', null),
+          column: util.getArg(mapping, 'generatedColumn', null),
+          lastColumn: util.getArg(mapping, 'lastGeneratedColumn', null)
         });
 
         mapping = this._originalMappings[++index];
@@ -2741,13 +2734,13 @@ SourceMapConsumer.prototype.__originalMappings = null;
     mappings = this._originalMappings;
     break;
   default:
-    throw new Error(&#x22;Unknown order of iteration.&#x22;);
+    throw new Error("Unknown order of iteration.");
   }
 
   var sourceRoot = this.sourceRoot;
   mappings.map(function (mapping) {
     var source = mapping.source === null ? null : this._sources.at(mapping.source);
-    if (source != null &#x26;&#x26; sourceRoot != null) {
+    if (source != null &amp;&amp; sourceRoot != null) {
       source = util.join(sourceRoot, source);
     }
     return {
@@ -2808,7 +2801,7 @@ SourceMapConsumer.prototype.__originalMappings = null;
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function SourceMapConsumer_charIsMappingSeparator(aStr, index) {
   var c = aStr.charAt(index);
-  return c === &#x22;;&#x22; || c === &#x22;,&#x22;;
+  return c === ";" || c === ",";
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
 
@@ -2817,7 +2810,7 @@ SourceMapConsumer.prototype.__originalMappings = null;
 // fact by caching the parsed variable length fields of each segment,
 // allowing us to avoid a second parse if we encounter the same
 // segment again.
-for (end = index; end &#x3c; length; end++) {
+for (end = index; end &lt; length; end++) {
   if (this.<span class="apidocCodeKeywordSpan">_charIsMappingSeparator</span>(aStr, end)) {
     break;
   }
@@ -2844,14 +2837,14 @@ if (segment) {
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function SourceMapConsumer_parseMappings(aStr, aSourceRoot) {
-  throw new Error(&#x22;Subclasses must implement _parseMappings&#x22;);
+  throw new Error("Subclasses must implement _parseMappings");
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
 //
 // `_originalMappings` is ordered by the original positions.
 
 SourceMapConsumer.prototype.__generatedMappings = null;
-Object.defineProperty(SourceMapConsumer.prototype, &#x27;_generatedMappings&#x27;, {
+Object.defineProperty(SourceMapConsumer.prototype, '_generatedMappings', {
   get: function () {
     if (!this.__generatedMappings) {
       this.<span class="apidocCodeKeywordSpan">_parseMappings</span>(this._mappings, this.sourceRoot);
@@ -2880,16 +2873,16 @@ SourceMapConsumer.prototype.__originalMappings = null;
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function SourceMapConsumer_allGeneratedPositionsFor(aArgs) {
-  var line = util.getArg(aArgs, &#x27;line&#x27;);
+  var line = util.getArg(aArgs, 'line');
 
   // When there is no exact match, BasicSourceMapConsumer.prototype._findMapping
   // returns the index of the closest mapping less than the needle. By
   // setting needle.originalColumn to 0, we thus find the last mapping for
   // the given line, provided such a mapping exists.
   var needle = {
-    source: util.getArg(aArgs, &#x27;source&#x27;),
+    source: util.getArg(aArgs, 'source'),
     originalLine: line,
-    originalColumn: util.getArg(aArgs, &#x27;column&#x27;, 0)
+    originalColumn: util.getArg(aArgs, 'column', 0)
   };
 
   if (this.sourceRoot != null) {
@@ -2904,11 +2897,11 @@ SourceMapConsumer.prototype.__originalMappings = null;
 
   var index = this._findMapping(needle,
                                 this._originalMappings,
-                                &#x22;originalLine&#x22;,
-                                &#x22;originalColumn&#x22;,
+                                "originalLine",
+                                "originalColumn",
                                 util.compareByOriginalPositions,
                                 binarySearch.LEAST_UPPER_BOUND);
-  if (index &#x3e;= 0) {
+  if (index &gt;= 0) {
     var mapping = this._originalMappings[index];
 
     if (aArgs.column === undefined) {
@@ -2918,11 +2911,11 @@ SourceMapConsumer.prototype.__originalMappings = null;
       // a mapping for a different line than the one we found. Since
       // mappings are sorted, this is guaranteed to find all mappings for
       // the line we found.
-      while (mapping &#x26;&#x26; mapping.originalLine === originalLine) {
+      while (mapping &amp;&amp; mapping.originalLine === originalLine) {
         mappings.push({
-          line: util.getArg(mapping, &#x27;generatedLine&#x27;, null),
-          column: util.getArg(mapping, &#x27;generatedColumn&#x27;, null),
-          lastColumn: util.getArg(mapping, &#x27;lastGeneratedColumn&#x27;, null)
+          line: util.getArg(mapping, 'generatedLine', null),
+          column: util.getArg(mapping, 'generatedColumn', null),
+          lastColumn: util.getArg(mapping, 'lastGeneratedColumn', null)
         });
 
         mapping = this._originalMappings[++index];
@@ -2934,13 +2927,13 @@ SourceMapConsumer.prototype.__originalMappings = null;
       // a mapping for a different line than the one we were searching for.
       // Since mappings are sorted, this is guaranteed to find all mappings for
       // the line we are searching for.
-      while (mapping &#x26;&#x26;
-             mapping.originalLine === line &#x26;&#x26;
+      while (mapping &amp;&amp;
+             mapping.originalLine === line &amp;&amp;
              mapping.originalColumn == originalColumn) {
         mappings.push({
-          line: util.getArg(mapping, &#x27;generatedLine&#x27;, null),
-          column: util.getArg(mapping, &#x27;generatedColumn&#x27;, null),
-          lastColumn: util.getArg(mapping, &#x27;lastGeneratedColumn&#x27;, null)
+          line: util.getArg(mapping, 'generatedLine', null),
+          column: util.getArg(mapping, 'generatedColumn', null),
+          lastColumn: util.getArg(mapping, 'lastGeneratedColumn', null)
         });
 
         mapping = this._originalMappings[++index];
@@ -3001,13 +2994,13 @@ SourceMapConsumer.prototype.__originalMappings = null;
     mappings = this._originalMappings;
     break;
   default:
-    throw new Error(&#x22;Unknown order of iteration.&#x22;);
+    throw new Error("Unknown order of iteration.");
   }
 
   var sourceRoot = this.sourceRoot;
   mappings.map(function (mapping) {
     var source = mapping.source === null ? null : this._sources.at(mapping.source);
-    if (source != null &#x26;&#x26; sourceRoot != null) {
+    if (source != null &amp;&amp; sourceRoot != null) {
       source = util.join(sourceRoot, source);
     }
     return {
@@ -3064,9 +3057,9 @@ SourceMapConsumer.prototype.__originalMappings = null;
   if (!aArgs) {
     aArgs = {};
   }
-  this._file = util.getArg(aArgs, &#x27;file&#x27;, null);
-  this._sourceRoot = util.getArg(aArgs, &#x27;sourceRoot&#x27;, null);
-  this._skipValidation = util.getArg(aArgs, &#x27;skipValidation&#x27;, false);
+  this._file = util.getArg(aArgs, 'file', null);
+  this._sourceRoot = util.getArg(aArgs, 'sourceRoot', null);
+  this._skipValidation = util.getArg(aArgs, 'skipValidation', false);
   this._sources = new ArraySet();
   this._names = new ArraySet();
   this._mappings = new MappingList();
@@ -3081,8 +3074,8 @@ SourceMapConsumer.prototype.__originalMappings = null;
 
 ```js
 var generator = new sourceMap.<span class="apidocCodeKeywordSpan">SourceMapGenerator</span>({
-  file: &#x22;my-generated-javascript-file.js&#x22;,
-  sourceRoot: &#x22;http://example.com/app/js/&#x22;
+  file: "my-generated-javascript-file.js",
+  sourceRoot: "http://example.com/app/js/"
 });
 ```
 
@@ -3310,30 +3303,30 @@ smc.file = aSourceMap._file;
   var previousOriginalLine = 0;
   var previousName = 0;
   var previousSource = 0;
-  var result = &#x27;&#x27;;
+  var result = '';
   var next;
   var mapping;
   var nameIdx;
   var sourceIdx;
 
   var mappings = this._mappings.toArray();
-  for (var i = 0, len = mappings.length; i &#x3c; len; i++) {
+  for (var i = 0, len = mappings.length; i &lt; len; i++) {
     mapping = mappings[i];
-    next = &#x27;&#x27;
+    next = ''
 
     if (mapping.generatedLine !== previousGeneratedLine) {
       previousGeneratedColumn = 0;
       while (mapping.generatedLine !== previousGeneratedLine) {
-        next += &#x27;;&#x27;;
+        next += ';';
         previousGeneratedLine++;
       }
     }
     else {
-      if (i &#x3e; 0) {
+      if (i &gt; 0) {
         if (!util.compareByGeneratedPositionsInflated(mapping, mappings[i - 1])) {
           continue;
         }
-        next += &#x27;,&#x27;;
+        next += ',';
       }
     }
 
@@ -3396,22 +3389,22 @@ function SourceMapGenerator_toJSON() {
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function SourceMapGenerator_validateMapping(aGenerated, aOriginal, aSource, aName) {
-  if (aGenerated &#x26;&#x26; &#x27;line&#x27; in aGenerated &#x26;&#x26; &#x27;column&#x27; in aGenerated
-      &#x26;&#x26; aGenerated.line &#x3e; 0 &#x26;&#x26; aGenerated.column &#x3e;= 0
-      &#x26;&#x26; !aOriginal &#x26;&#x26; !aSource &#x26;&#x26; !aName) {
+  if (aGenerated &amp;&amp; 'line' in aGenerated &amp;&amp; 'column' in aGenerated
+      &amp;&amp; aGenerated.line &gt; 0 &amp;&amp; aGenerated.column &gt;= 0
+      &amp;&amp; !aOriginal &amp;&amp; !aSource &amp;&amp; !aName) {
     // Case 1.
     return;
   }
-  else if (aGenerated &#x26;&#x26; &#x27;line&#x27; in aGenerated &#x26;&#x26; &#x27;column&#x27; in aGenerated
-           &#x26;&#x26; aOriginal &#x26;&#x26; &#x27;line&#x27; in aOriginal &#x26;&#x26; &#x27;column&#x27; in aOriginal
-           &#x26;&#x26; aGenerated.line &#x3e; 0 &#x26;&#x26; aGenerated.column &#x3e;= 0
-           &#x26;&#x26; aOriginal.line &#x3e; 0 &#x26;&#x26; aOriginal.column &#x3e;= 0
-           &#x26;&#x26; aSource) {
+  else if (aGenerated &amp;&amp; 'line' in aGenerated &amp;&amp; 'column' in aGenerated
+           &amp;&amp; aOriginal &amp;&amp; 'line' in aOriginal &amp;&amp; 'column' in aOriginal
+           &amp;&amp; aGenerated.line &gt; 0 &amp;&amp; aGenerated.column &gt;= 0
+           &amp;&amp; aOriginal.line &gt; 0 &amp;&amp; aOriginal.column &gt;= 0
+           &amp;&amp; aSource) {
     // Cases 2 and 3.
     return;
   }
   else {
-    throw new Error(&#x27;Invalid mapping: &#x27; + JSON.stringify({
+    throw new Error('Invalid mapping: ' + JSON.stringify({
       generated: aGenerated,
       source: aSource,
       original: aOriginal,
@@ -3421,10 +3414,10 @@ function SourceMapGenerator_toJSON() {
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
   function SourceMapGenerator_addMapping(aArgs) {
-var generated = util.getArg(aArgs, &#x27;generated&#x27;);
-var original = util.getArg(aArgs, &#x27;original&#x27;, null);
-var source = util.getArg(aArgs, &#x27;source&#x27;, null);
-var name = util.getArg(aArgs, &#x27;name&#x27;, null);
+var generated = util.getArg(aArgs, 'generated');
+var original = util.getArg(aArgs, 'original', null);
+var source = util.getArg(aArgs, 'source', null);
+var name = util.getArg(aArgs, 'name', null);
 
 if (!this._skipValidation) {
   this.<span class="apidocCodeKeywordSpan">_validateMapping</span>(generated, original, source, name);
@@ -3448,10 +3441,10 @@ if (source != null) {
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function SourceMapGenerator_addMapping(aArgs) {
-  var generated = util.getArg(aArgs, &#x27;generated&#x27;);
-  var original = util.getArg(aArgs, &#x27;original&#x27;, null);
-  var source = util.getArg(aArgs, &#x27;source&#x27;, null);
-  var name = util.getArg(aArgs, &#x27;name&#x27;, null);
+  var generated = util.getArg(aArgs, 'generated');
+  var original = util.getArg(aArgs, 'original', null);
+  var source = util.getArg(aArgs, 'source', null);
+  var name = util.getArg(aArgs, 'name', null);
 
   if (!this._skipValidation) {
     this._validateMapping(generated, original, source, name);
@@ -3474,8 +3467,8 @@ if (source != null) {
   this._mappings.add({
     generatedLine: generated.line,
     generatedColumn: generated.column,
-    originalLine: original != null &#x26;&#x26; original.line,
-    originalColumn: original != null &#x26;&#x26; original.column,
+    originalLine: original != null &amp;&amp; original.line,
+    originalColumn: original != null &amp;&amp; original.column,
     source: source,
     name: name
   });
@@ -3521,14 +3514,14 @@ if (source != null) {
   if (aSourceFile == null) {
     if (aSourceMapConsumer.file == null) {
       throw new Error(
-        &#x27;SourceMapGenerator.prototype.applySourceMap requires either an explicit source file, &#x27; +
-        &#x27;or the source map\&#x27;s &#x22;file&#x22; property. Both were omitted.&#x27;
+        'SourceMapGenerator.prototype.applySourceMap requires either an explicit source file, ' +
+        'or the source map\'s "file" property. Both were omitted.'
       );
     }
     sourceFile = aSourceMapConsumer.file;
   }
   var sourceRoot = this._sourceRoot;
-  // Make &#x22;sourceFile&#x22; relative if an absolute Url is passed.
+  // Make "sourceFile" relative if an absolute Url is passed.
   if (sourceRoot != null) {
     sourceFile = util.relative(sourceRoot, sourceFile);
   }
@@ -3537,9 +3530,9 @@ if (source != null) {
   var newSources = new ArraySet();
   var newNames = new ArraySet();
 
-  // Find mappings for the &#x22;sourceFile&#x22;
+  // Find mappings for the "sourceFile"
   this._mappings.unsortedForEach(function (mapping) {
-    if (mapping.source === sourceFile &#x26;&#x26; mapping.originalLine != null) {
+    if (mapping.source === sourceFile &amp;&amp; mapping.originalLine != null) {
       // Check if it can be mapped by the source map, then update the mapping.
       var original = aSourceMapConsumer.originalPositionFor({
         line: mapping.originalLine,
@@ -3563,12 +3556,12 @@ if (source != null) {
     }
 
     var source = mapping.source;
-    if (source != null &#x26;&#x26; !newSources.has(source)) {
+    if (source != null &amp;&amp; !newSources.has(source)) {
       newSources.add(source);
     }
 
     var name = mapping.name;
-    if (name != null &#x26;&#x26; !newNames.has(name)) {
+    if (name != null &amp;&amp; !newNames.has(name)) {
       newNames.add(name);
     }
 
@@ -3819,30 +3812,30 @@ smc.file = aSourceMap._file;
   var previousOriginalLine = 0;
   var previousName = 0;
   var previousSource = 0;
-  var result = &#x27;&#x27;;
+  var result = '';
   var next;
   var mapping;
   var nameIdx;
   var sourceIdx;
 
   var mappings = this._mappings.toArray();
-  for (var i = 0, len = mappings.length; i &#x3c; len; i++) {
+  for (var i = 0, len = mappings.length; i &lt; len; i++) {
     mapping = mappings[i];
-    next = &#x27;&#x27;
+    next = ''
 
     if (mapping.generatedLine !== previousGeneratedLine) {
       previousGeneratedColumn = 0;
       while (mapping.generatedLine !== previousGeneratedLine) {
-        next += &#x27;;&#x27;;
+        next += ';';
         previousGeneratedLine++;
       }
     }
     else {
-      if (i &#x3e; 0) {
+      if (i &gt; 0) {
         if (!util.compareByGeneratedPositionsInflated(mapping, mappings[i - 1])) {
           continue;
         }
-        next += &#x27;,&#x27;;
+        next += ',';
       }
     }
 
@@ -3910,22 +3903,22 @@ function SourceMapGenerator_toJSON() {
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function SourceMapGenerator_validateMapping(aGenerated, aOriginal, aSource, aName) {
-  if (aGenerated &#x26;&#x26; &#x27;line&#x27; in aGenerated &#x26;&#x26; &#x27;column&#x27; in aGenerated
-      &#x26;&#x26; aGenerated.line &#x3e; 0 &#x26;&#x26; aGenerated.column &#x3e;= 0
-      &#x26;&#x26; !aOriginal &#x26;&#x26; !aSource &#x26;&#x26; !aName) {
+  if (aGenerated &amp;&amp; 'line' in aGenerated &amp;&amp; 'column' in aGenerated
+      &amp;&amp; aGenerated.line &gt; 0 &amp;&amp; aGenerated.column &gt;= 0
+      &amp;&amp; !aOriginal &amp;&amp; !aSource &amp;&amp; !aName) {
     // Case 1.
     return;
   }
-  else if (aGenerated &#x26;&#x26; &#x27;line&#x27; in aGenerated &#x26;&#x26; &#x27;column&#x27; in aGenerated
-           &#x26;&#x26; aOriginal &#x26;&#x26; &#x27;line&#x27; in aOriginal &#x26;&#x26; &#x27;column&#x27; in aOriginal
-           &#x26;&#x26; aGenerated.line &#x3e; 0 &#x26;&#x26; aGenerated.column &#x3e;= 0
-           &#x26;&#x26; aOriginal.line &#x3e; 0 &#x26;&#x26; aOriginal.column &#x3e;= 0
-           &#x26;&#x26; aSource) {
+  else if (aGenerated &amp;&amp; 'line' in aGenerated &amp;&amp; 'column' in aGenerated
+           &amp;&amp; aOriginal &amp;&amp; 'line' in aOriginal &amp;&amp; 'column' in aOriginal
+           &amp;&amp; aGenerated.line &gt; 0 &amp;&amp; aGenerated.column &gt;= 0
+           &amp;&amp; aOriginal.line &gt; 0 &amp;&amp; aOriginal.column &gt;= 0
+           &amp;&amp; aSource) {
     // Cases 2 and 3.
     return;
   }
   else {
-    throw new Error(&#x27;Invalid mapping: &#x27; + JSON.stringify({
+    throw new Error('Invalid mapping: ' + JSON.stringify({
       generated: aGenerated,
       source: aSource,
       original: aOriginal,
@@ -3935,10 +3928,10 @@ function SourceMapGenerator_toJSON() {
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
   function SourceMapGenerator_addMapping(aArgs) {
-var generated = util.getArg(aArgs, &#x27;generated&#x27;);
-var original = util.getArg(aArgs, &#x27;original&#x27;, null);
-var source = util.getArg(aArgs, &#x27;source&#x27;, null);
-var name = util.getArg(aArgs, &#x27;name&#x27;, null);
+var generated = util.getArg(aArgs, 'generated');
+var original = util.getArg(aArgs, 'original', null);
+var source = util.getArg(aArgs, 'source', null);
+var name = util.getArg(aArgs, 'name', null);
 
 if (!this._skipValidation) {
   this.<span class="apidocCodeKeywordSpan">_validateMapping</span>(generated, original, source, name);
@@ -3967,10 +3960,10 @@ if (source != null) {
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function SourceMapGenerator_addMapping(aArgs) {
-  var generated = util.getArg(aArgs, &#x27;generated&#x27;);
-  var original = util.getArg(aArgs, &#x27;original&#x27;, null);
-  var source = util.getArg(aArgs, &#x27;source&#x27;, null);
-  var name = util.getArg(aArgs, &#x27;name&#x27;, null);
+  var generated = util.getArg(aArgs, 'generated');
+  var original = util.getArg(aArgs, 'original', null);
+  var source = util.getArg(aArgs, 'source', null);
+  var name = util.getArg(aArgs, 'name', null);
 
   if (!this._skipValidation) {
     this._validateMapping(generated, original, source, name);
@@ -3993,8 +3986,8 @@ if (source != null) {
   this._mappings.add({
     generatedLine: generated.line,
     generatedColumn: generated.column,
-    originalLine: original != null &#x26;&#x26; original.line,
-    originalColumn: original != null &#x26;&#x26; original.column,
+    originalLine: original != null &amp;&amp; original.line,
+    originalColumn: original != null &amp;&amp; original.column,
     source: source,
     name: name
   });
@@ -4045,14 +4038,14 @@ if (source != null) {
   if (aSourceFile == null) {
     if (aSourceMapConsumer.file == null) {
       throw new Error(
-        &#x27;SourceMapGenerator.prototype.applySourceMap requires either an explicit source file, &#x27; +
-        &#x27;or the source map\&#x27;s &#x22;file&#x22; property. Both were omitted.&#x27;
+        'SourceMapGenerator.prototype.applySourceMap requires either an explicit source file, ' +
+        'or the source map\'s "file" property. Both were omitted.'
       );
     }
     sourceFile = aSourceMapConsumer.file;
   }
   var sourceRoot = this._sourceRoot;
-  // Make &#x22;sourceFile&#x22; relative if an absolute Url is passed.
+  // Make "sourceFile" relative if an absolute Url is passed.
   if (sourceRoot != null) {
     sourceFile = util.relative(sourceRoot, sourceFile);
   }
@@ -4061,9 +4054,9 @@ if (source != null) {
   var newSources = new ArraySet();
   var newNames = new ArraySet();
 
-  // Find mappings for the &#x22;sourceFile&#x22;
+  // Find mappings for the "sourceFile"
   this._mappings.unsortedForEach(function (mapping) {
-    if (mapping.source === sourceFile &#x26;&#x26; mapping.originalLine != null) {
+    if (mapping.source === sourceFile &amp;&amp; mapping.originalLine != null) {
       // Check if it can be mapped by the source map, then update the mapping.
       var original = aSourceMapConsumer.originalPositionFor({
         line: mapping.originalLine,
@@ -4087,12 +4080,12 @@ if (source != null) {
     }
 
     var source = mapping.source;
-    if (source != null &#x26;&#x26; !newSources.has(source)) {
+    if (source != null &amp;&amp; !newSources.has(source)) {
       newSources.add(source);
     }
 
     var name = mapping.name;
-    if (name != null &#x26;&#x26; !newNames.has(name)) {
+    if (name != null &amp;&amp; !newNames.has(name)) {
       newNames.add(name);
     }
 
@@ -4335,11 +4328,11 @@ exports.SourceMapGenerator = SourceMapGenerator;
   var shiftNextLine = function() {
     var lineContents = remainingLines.shift();
     // The last line of a file might not have a newline.
-    var newLine = remainingLines.shift() || &#x22;&#x22;;
+    var newLine = remainingLines.shift() || "";
     return lineContents + newLine;
   };
 
-  // We need to remember the position of &#x22;remainingLines&#x22;
+  // We need to remember the position of "remainingLines"
   var lastGeneratedLine = 1, lastGeneratedColumn = 0;
 
   // The generate SourceNodes we need a code range.
@@ -4349,18 +4342,18 @@ exports.SourceMapGenerator = SourceMapGenerator;
 
   aSourceMapConsumer.eachMapping(function (mapping) {
     if (lastMapping !== null) {
-      // We add the code from &#x22;lastMapping&#x22; to &#x22;mapping&#x22;:
+      // We add the code from "lastMapping" to "mapping":
       // First check if there is a new line in between.
-      if (lastGeneratedLine &#x3c; mapping.generatedLine) {
-        // Associate first line with &#x22;lastMapping&#x22;
+      if (lastGeneratedLine &lt; mapping.generatedLine) {
+        // Associate first line with "lastMapping"
         addMappingWithCode(lastMapping, shiftNextLine());
         lastGeneratedLine++;
         lastGeneratedColumn = 0;
         // The remaining code is added without mapping
       } else {
         // There is no new line in between.
-        // Associate the code between &#x22;lastGeneratedColumn&#x22; and
-        // &#x22;mapping.generatedColumn&#x22; with &#x22;lastMapping&#x22;
+        // Associate the code between "lastGeneratedColumn" and
+        // "mapping.generatedColumn" with "lastMapping"
         var nextLine = remainingLines[0];
         var code = nextLine.substr(0, mapping.generatedColumn -
                                       lastGeneratedColumn);
@@ -4376,11 +4369,11 @@ exports.SourceMapGenerator = SourceMapGenerator;
     // We add the generated code until the first mapping
     // to the SourceNode without any mapping.
     // Each line is added as separate string.
-    while (lastGeneratedLine &#x3c; mapping.generatedLine) {
+    while (lastGeneratedLine &lt; mapping.generatedLine) {
       node.add(shiftNextLine());
       lastGeneratedLine++;
     }
-    if (lastGeneratedColumn &#x3c; mapping.generatedColumn) {
+    if (lastGeneratedColumn &lt; mapping.generatedColumn) {
       var nextLine = remainingLines[0];
       node.add(nextLine.substr(0, mapping.generatedColumn));
       remainingLines[0] = nextLine.substr(mapping.generatedColumn);
@@ -4389,13 +4382,13 @@ exports.SourceMapGenerator = SourceMapGenerator;
     lastMapping = mapping;
   }, this);
   // We have processed all mappings.
-  if (remainingLines.length &#x3e; 0) {
+  if (remainingLines.length &gt; 0) {
     if (lastMapping) {
-      // Associate the remaining code in the current line with &#x22;lastMapping&#x22;
+      // Associate the remaining code in the current line with "lastMapping"
       addMappingWithCode(lastMapping, shiftNextLine());
     }
     // and add the remaining lines without any mapping
-    node.add(remainingLines.join(&#x22;&#x22;));
+    node.add(remainingLines.join(""));
   }
 
   // Copy sourcesContent into SourceNode
@@ -4476,11 +4469,11 @@ exports.SourceMapGenerator = SourceMapGenerator;
   var shiftNextLine = function() {
     var lineContents = remainingLines.shift();
     // The last line of a file might not have a newline.
-    var newLine = remainingLines.shift() || &#x22;&#x22;;
+    var newLine = remainingLines.shift() || "";
     return lineContents + newLine;
   };
 
-  // We need to remember the position of &#x22;remainingLines&#x22;
+  // We need to remember the position of "remainingLines"
   var lastGeneratedLine = 1, lastGeneratedColumn = 0;
 
   // The generate SourceNodes we need a code range.
@@ -4490,18 +4483,18 @@ exports.SourceMapGenerator = SourceMapGenerator;
 
   aSourceMapConsumer.eachMapping(function (mapping) {
     if (lastMapping !== null) {
-      // We add the code from &#x22;lastMapping&#x22; to &#x22;mapping&#x22;:
+      // We add the code from "lastMapping" to "mapping":
       // First check if there is a new line in between.
-      if (lastGeneratedLine &#x3c; mapping.generatedLine) {
-        // Associate first line with &#x22;lastMapping&#x22;
+      if (lastGeneratedLine &lt; mapping.generatedLine) {
+        // Associate first line with "lastMapping"
         addMappingWithCode(lastMapping, shiftNextLine());
         lastGeneratedLine++;
         lastGeneratedColumn = 0;
         // The remaining code is added without mapping
       } else {
         // There is no new line in between.
-        // Associate the code between &#x22;lastGeneratedColumn&#x22; and
-        // &#x22;mapping.generatedColumn&#x22; with &#x22;lastMapping&#x22;
+        // Associate the code between "lastGeneratedColumn" and
+        // "mapping.generatedColumn" with "lastMapping"
         var nextLine = remainingLines[0];
         var code = nextLine.substr(0, mapping.generatedColumn -
                                       lastGeneratedColumn);
@@ -4517,11 +4510,11 @@ exports.SourceMapGenerator = SourceMapGenerator;
     // We add the generated code until the first mapping
     // to the SourceNode without any mapping.
     // Each line is added as separate string.
-    while (lastGeneratedLine &#x3c; mapping.generatedLine) {
+    while (lastGeneratedLine &lt; mapping.generatedLine) {
       node.add(shiftNextLine());
       lastGeneratedLine++;
     }
-    if (lastGeneratedColumn &#x3c; mapping.generatedColumn) {
+    if (lastGeneratedColumn &lt; mapping.generatedColumn) {
       var nextLine = remainingLines[0];
       node.add(nextLine.substr(0, mapping.generatedColumn));
       remainingLines[0] = nextLine.substr(mapping.generatedColumn);
@@ -4530,13 +4523,13 @@ exports.SourceMapGenerator = SourceMapGenerator;
     lastMapping = mapping;
   }, this);
   // We have processed all mappings.
-  if (remainingLines.length &#x3e; 0) {
+  if (remainingLines.length &gt; 0) {
     if (lastMapping) {
-      // Associate the remaining code in the current line with &#x22;lastMapping&#x22;
+      // Associate the remaining code in the current line with "lastMapping"
       addMappingWithCode(lastMapping, shiftNextLine());
     }
     // and add the remaining lines without any mapping
-    node.add(remainingLines.join(&#x22;&#x22;));
+    node.add(remainingLines.join(""));
   }
 
   // Copy sourcesContent into SourceNode
@@ -4610,14 +4603,14 @@ exports.SourceMapGenerator = SourceMapGenerator;
       this.add(chunk);
     }, this);
   }
-  else if (aChunk[isSourceNode] || typeof aChunk === &#x22;string&#x22;) {
+  else if (aChunk[isSourceNode] || typeof aChunk === "string") {
     if (aChunk) {
       this.children.push(aChunk);
     }
   }
   else {
     throw new TypeError(
-      &#x22;Expected a SourceNode, string, or an array of SourceNodes and strings. Got &#x22; + aChunk
+      "Expected a SourceNode, string, or an array of SourceNodes and strings. Got " + aChunk
     );
   }
   return this;
@@ -4658,9 +4651,9 @@ exports.SourceMapGenerator = SourceMapGenerator;
   var newChildren;
   var i;
   var len = this.children.length;
-  if (len &#x3e; 0) {
+  if (len &gt; 0) {
     newChildren = [];
-    for (i = 0; i &#x3c; len-1; i++) {
+    for (i = 0; i &lt; len-1; i++) {
       newChildren.push(this.children[i]);
       newChildren.push(aSep);
     }
@@ -4685,7 +4678,7 @@ exports.SourceMapGenerator = SourceMapGenerator;
     - [SourceNode.prototype.toStringWithSourceMap([startOfSourceMap])](#sourcenodeprototypetostringwithsourcemapstartofsourcemap
 )
 
-&#x3c;!-- END doctoc generated TOC please keep comment here to allow auto update --&#x3e;
+&lt;!-- END doctoc generated TOC please keep comment here to allow auto update --&gt;
 
 ## Examples
 ...</pre></li>
@@ -4702,16 +4695,16 @@ exports.SourceMapGenerator = SourceMapGenerator;
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function SourceNode_prepend(aChunk) {
   if (Array.isArray(aChunk)) {
-    for (var i = aChunk.length-1; i &#x3e;= 0; i--) {
+    for (var i = aChunk.length-1; i &gt;= 0; i--) {
       this.prepend(aChunk[i]);
     }
   }
-  else if (aChunk[isSourceNode] || typeof aChunk === &#x22;string&#x22;) {
+  else if (aChunk[isSourceNode] || typeof aChunk === "string") {
     this.children.unshift(aChunk);
   }
   else {
     throw new TypeError(
-      &#x22;Expected a SourceNode, string, or an array of SourceNodes and strings. Got &#x22; + aChunk
+      "Expected a SourceNode, string, or an array of SourceNodes and strings. Got " + aChunk
     );
   }
   return this;
@@ -4753,11 +4746,11 @@ exports.SourceMapGenerator = SourceMapGenerator;
   if (lastChild[isSourceNode]) {
     lastChild.replaceRight(aPattern, aReplacement);
   }
-  else if (typeof lastChild === &#x27;string&#x27;) {
+  else if (typeof lastChild === 'string') {
     this.children[this.children.length - 1] = lastChild.replace(aPattern, aReplacement);
   }
   else {
-    this.children.push(&#x27;&#x27;.replace(aPattern, aReplacement));
+    this.children.push(''.replace(aPattern, aReplacement));
   }
   return this;
 }</pre></li>
@@ -4777,7 +4770,7 @@ exports.SourceMapGenerator = SourceMapGenerator;
     - [SourceNode.prototype.toStringWithSourceMap([startOfSourceMap])](#sourcenodeprototypetostringwithsourcemapstartofsourcemap
 )
 
-&#x3c;!-- END doctoc generated TOC please keep comment here to allow auto update --&#x3e;
+&lt;!-- END doctoc generated TOC please keep comment here to allow auto update --&gt;
 
 ## Examples
 ...</pre></li>
@@ -4829,7 +4822,7 @@ exports.SourceMapGenerator = SourceMapGenerator;
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function SourceNode_toString() {
-  var str = &#x22;&#x22;;
+  var str = "";
   this.walk(function (chunk) {
     str += chunk;
   });
@@ -4870,7 +4863,7 @@ exports.SourceMapGenerator = SourceMapGenerator;
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function SourceNode_toStringWithSourceMap(aArgs) {
   var generated = {
-    code: &#x22;&#x22;,
+    code: "",
     line: 1,
     column: 0
   };
@@ -4883,8 +4876,8 @@ exports.SourceMapGenerator = SourceMapGenerator;
   this.walk(function (chunk, original) {
     generated.code += chunk;
     if (original.source !== null
-        &#x26;&#x26; original.line !== null
-        &#x26;&#x26; original.column !== null) {
+        &amp;&amp; original.line !== null
+        &amp;&amp; original.column !== null) {
       if(lastOriginalSource !== original.source
          || lastOriginalLine !== original.line
          || lastOriginalColumn !== original.column
@@ -4917,7 +4910,7 @@ exports.SourceMapGenerator = SourceMapGenerator;
       lastOriginalSource = null;
       sourceMappingActive = false;
     }
-    for (var idx = 0, length = chunk.length; idx &#x3c; length; idx++) {
+    for (var idx = 0, length = chunk.length; idx &lt; length; idx++) {
       if (chunk.charCodeAt(idx) === NEWLINE_CODE) {
         generated.line++;
         generated.column = 0;
@@ -4962,7 +4955,7 @@ exports.SourceMapGenerator = SourceMapGenerator;
     - [SourceNode.prototype.<span class="apidocCodeKeywordSpan">toStringWithSourceMap</span>([startOfSourceMap])](#sourcenodeprototypetostringwithsourcemapstartofsourcemap
 )
 
-&#x3c;!-- END doctoc generated TOC please keep comment here to allow auto update --&#x3e;
+&lt;!-- END doctoc generated TOC please keep comment here to allow auto update --&gt;
 
 ## Examples
 
@@ -4981,13 +4974,13 @@ exports.SourceMapGenerator = SourceMapGenerator;
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function SourceNode_walk(aFn) {
   var chunk;
-  for (var i = 0, len = this.children.length; i &#x3c; len; i++) {
+  for (var i = 0, len = this.children.length; i &lt; len; i++) {
     chunk = this.children[i];
     if (chunk[isSourceNode]) {
       chunk.walk(aFn);
     }
     else {
-      if (chunk !== &#x27;&#x27;) {
+      if (chunk !== '') {
         aFn(chunk, { source: this.source,
                      line: this.line,
                      column: this.column,
@@ -5014,7 +5007,7 @@ exports.SourceMapGenerator = SourceMapGenerator;
     - [SourceNode.prototype.toStringWithSourceMap([startOfSourceMap])](#sourcenodeprototypetostringwithsourcemapstartofsourcemap
 )
 
-&#x3c;!-- END doctoc generated TOC please keep comment here to allow auto update --&#x3e;
+&lt;!-- END doctoc generated TOC please keep comment here to allow auto update --&gt;
 ...</pre></li>
     </ul>
 
@@ -5028,14 +5021,14 @@ exports.SourceMapGenerator = SourceMapGenerator;
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function SourceNode_walkSourceContents(aFn) {
-  for (var i = 0, len = this.children.length; i &#x3c; len; i++) {
+  for (var i = 0, len = this.children.length; i &lt; len; i++) {
     if (this.children[i][isSourceNode]) {
       this.children[i].walkSourceContents(aFn);
     }
   }
 
   var sources = Object.keys(this.sourceContents);
-  for (var i = 0, len = sources.length; i &#x3c; len; i++) {
+  for (var i = 0, len = sources.length; i &lt; len; i++) {
     aFn(util.fromSetString(sources[i]), this.sourceContents[sources[i]]);
   }
 }</pre></li>
@@ -5057,7 +5050,7 @@ exports.SourceMapGenerator = SourceMapGenerator;
     - [SourceNode.prototype.toStringWithSourceMap([startOfSourceMap])](#sourcenodeprototypetostringwithsourcemapstartofsourcemap
 )
 
-&#x3c;!-- END doctoc generated TOC please keep comment here to allow auto update --&#x3e;
+&lt;!-- END doctoc generated TOC please keep comment here to allow auto update --&gt;
 ...</pre></li>
     </ul>
 
@@ -5081,14 +5074,14 @@ exports.SourceMapGenerator = SourceMapGenerator;
       this.add(chunk);
     }, this);
   }
-  else if (aChunk[isSourceNode] || typeof aChunk === &#x22;string&#x22;) {
+  else if (aChunk[isSourceNode] || typeof aChunk === "string") {
     if (aChunk) {
       this.children.push(aChunk);
     }
   }
   else {
     throw new TypeError(
-      &#x22;Expected a SourceNode, string, or an array of SourceNodes and strings. Got &#x22; + aChunk
+      "Expected a SourceNode, string, or an array of SourceNodes and strings. Got " + aChunk
     );
   }
   return this;
@@ -5134,9 +5127,9 @@ exports.SourceMapGenerator = SourceMapGenerator;
   var newChildren;
   var i;
   var len = this.children.length;
-  if (len &#x3e; 0) {
+  if (len &gt; 0) {
     newChildren = [];
-    for (i = 0; i &#x3c; len-1; i++) {
+    for (i = 0; i &lt; len-1; i++) {
       newChildren.push(this.children[i]);
       newChildren.push(aSep);
     }
@@ -5161,7 +5154,7 @@ exports.SourceMapGenerator = SourceMapGenerator;
     - [SourceNode.prototype.toStringWithSourceMap([startOfSourceMap])](#sourcenodeprototypetostringwithsourcemapstartofsourcemap
 )
 
-&#x3c;!-- END doctoc generated TOC please keep comment here to allow auto update --&#x3e;
+&lt;!-- END doctoc generated TOC please keep comment here to allow auto update --&gt;
 
 ## Examples
 ...</pre></li>
@@ -5183,16 +5176,16 @@ exports.SourceMapGenerator = SourceMapGenerator;
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function SourceNode_prepend(aChunk) {
   if (Array.isArray(aChunk)) {
-    for (var i = aChunk.length-1; i &#x3e;= 0; i--) {
+    for (var i = aChunk.length-1; i &gt;= 0; i--) {
       this.prepend(aChunk[i]);
     }
   }
-  else if (aChunk[isSourceNode] || typeof aChunk === &#x22;string&#x22;) {
+  else if (aChunk[isSourceNode] || typeof aChunk === "string") {
     this.children.unshift(aChunk);
   }
   else {
     throw new TypeError(
-      &#x22;Expected a SourceNode, string, or an array of SourceNodes and strings. Got &#x22; + aChunk
+      "Expected a SourceNode, string, or an array of SourceNodes and strings. Got " + aChunk
     );
   }
   return this;
@@ -5239,11 +5232,11 @@ exports.SourceMapGenerator = SourceMapGenerator;
   if (lastChild[isSourceNode]) {
     lastChild.replaceRight(aPattern, aReplacement);
   }
-  else if (typeof lastChild === &#x27;string&#x27;) {
+  else if (typeof lastChild === 'string') {
     this.children[this.children.length - 1] = lastChild.replace(aPattern, aReplacement);
   }
   else {
-    this.children.push(&#x27;&#x27;.replace(aPattern, aReplacement));
+    this.children.push(''.replace(aPattern, aReplacement));
   }
   return this;
 }</pre></li>
@@ -5263,7 +5256,7 @@ exports.SourceMapGenerator = SourceMapGenerator;
     - [SourceNode.prototype.toStringWithSourceMap([startOfSourceMap])](#sourcenodeprototypetostringwithsourcemapstartofsourcemap
 )
 
-&#x3c;!-- END doctoc generated TOC please keep comment here to allow auto update --&#x3e;
+&lt;!-- END doctoc generated TOC please keep comment here to allow auto update --&gt;
 
 ## Examples
 ...</pre></li>
@@ -5365,7 +5358,7 @@ exports.SourceMapGenerator = SourceMapGenerator;
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function SourceNode_toStringWithSourceMap(aArgs) {
   var generated = {
-    code: &#x22;&#x22;,
+    code: "",
     line: 1,
     column: 0
   };
@@ -5378,8 +5371,8 @@ exports.SourceMapGenerator = SourceMapGenerator;
   this.walk(function (chunk, original) {
     generated.code += chunk;
     if (original.source !== null
-        &#x26;&#x26; original.line !== null
-        &#x26;&#x26; original.column !== null) {
+        &amp;&amp; original.line !== null
+        &amp;&amp; original.column !== null) {
       if(lastOriginalSource !== original.source
          || lastOriginalLine !== original.line
          || lastOriginalColumn !== original.column
@@ -5412,7 +5405,7 @@ exports.SourceMapGenerator = SourceMapGenerator;
       lastOriginalSource = null;
       sourceMappingActive = false;
     }
-    for (var idx = 0, length = chunk.length; idx &#x3c; length; idx++) {
+    for (var idx = 0, length = chunk.length; idx &lt; length; idx++) {
       if (chunk.charCodeAt(idx) === NEWLINE_CODE) {
         generated.line++;
         generated.column = 0;
@@ -5457,7 +5450,7 @@ exports.SourceMapGenerator = SourceMapGenerator;
     - [SourceNode.prototype.<span class="apidocCodeKeywordSpan">toStringWithSourceMap</span>([startOfSourceMap])](#sourcenodeprototypetostringwithsourcemapstartofsourcemap
 )
 
-&#x3c;!-- END doctoc generated TOC please keep comment here to allow auto update --&#x3e;
+&lt;!-- END doctoc generated TOC please keep comment here to allow auto update --&gt;
 
 ## Examples
 
@@ -5481,13 +5474,13 @@ exports.SourceMapGenerator = SourceMapGenerator;
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function SourceNode_walk(aFn) {
   var chunk;
-  for (var i = 0, len = this.children.length; i &#x3c; len; i++) {
+  for (var i = 0, len = this.children.length; i &lt; len; i++) {
     chunk = this.children[i];
     if (chunk[isSourceNode]) {
       chunk.walk(aFn);
     }
     else {
-      if (chunk !== &#x27;&#x27;) {
+      if (chunk !== '') {
         aFn(chunk, { source: this.source,
                      line: this.line,
                      column: this.column,
@@ -5514,7 +5507,7 @@ exports.SourceMapGenerator = SourceMapGenerator;
     - [SourceNode.prototype.toStringWithSourceMap([startOfSourceMap])](#sourcenodeprototypetostringwithsourcemapstartofsourcemap
 )
 
-&#x3c;!-- END doctoc generated TOC please keep comment here to allow auto update --&#x3e;
+&lt;!-- END doctoc generated TOC please keep comment here to allow auto update --&gt;
 ...</pre></li>
     </ul>
 
@@ -5533,14 +5526,14 @@ exports.SourceMapGenerator = SourceMapGenerator;
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function SourceNode_walkSourceContents(aFn) {
-  for (var i = 0, len = this.children.length; i &#x3c; len; i++) {
+  for (var i = 0, len = this.children.length; i &lt; len; i++) {
     if (this.children[i][isSourceNode]) {
       this.children[i].walkSourceContents(aFn);
     }
   }
 
   var sources = Object.keys(this.sourceContents);
-  for (var i = 0, len = sources.length; i &#x3c; len; i++) {
+  for (var i = 0, len = sources.length; i &lt; len; i++) {
     aFn(util.fromSetString(sources[i]), this.sourceContents[sources[i]]);
   }
 }</pre></li>
@@ -5562,7 +5555,7 @@ exports.SourceMapGenerator = SourceMapGenerator;
     - [SourceNode.prototype.toStringWithSourceMap([startOfSourceMap])](#sourcenodeprototypetostringwithsourcemapstartofsourcemap
 )
 
-&#x3c;!-- END doctoc generated TOC please keep comment here to allow auto update --&#x3e;
+&lt;!-- END doctoc generated TOC please keep comment here to allow auto update --&gt;
 ...</pre></li>
     </ul>
 
@@ -5602,33 +5595,33 @@ exports.SourceMapGenerator = SourceMapGenerator;
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">decode = function (charCode) {
-  var bigA = 65;     // &#x27;A&#x27;
-  var bigZ = 90;     // &#x27;Z&#x27;
+  var bigA = 65;     // 'A'
+  var bigZ = 90;     // 'Z'
 
-  var littleA = 97;  // &#x27;a&#x27;
-  var littleZ = 122; // &#x27;z&#x27;
+  var littleA = 97;  // 'a'
+  var littleZ = 122; // 'z'
 
-  var zero = 48;     // &#x27;0&#x27;
-  var nine = 57;     // &#x27;9&#x27;
+  var zero = 48;     // '0'
+  var nine = 57;     // '9'
 
-  var plus = 43;     // &#x27;+&#x27;
-  var slash = 47;    // &#x27;/&#x27;
+  var plus = 43;     // '+'
+  var slash = 47;    // '/'
 
   var littleOffset = 26;
   var numberOffset = 52;
 
   // 0 - 25: ABCDEFGHIJKLMNOPQRSTUVWXYZ
-  if (bigA &#x3c;= charCode &#x26;&#x26; charCode &#x3c;= bigZ) {
+  if (bigA &lt;= charCode &amp;&amp; charCode &lt;= bigZ) {
     return (charCode - bigA);
   }
 
   // 26 - 51: abcdefghijklmnopqrstuvwxyz
-  if (littleA &#x3c;= charCode &#x26;&#x26; charCode &#x3c;= littleZ) {
+  if (littleA &lt;= charCode &amp;&amp; charCode &lt;= littleZ) {
     return (charCode - littleA + littleOffset);
   }
 
   // 52 - 61: 0123456789
-  if (zero &#x3c;= charCode &#x26;&#x26; charCode &#x3c;= nine) {
+  if (zero &lt;= charCode &amp;&amp; charCode &lt;= nine) {
     return (charCode - zero + numberOffset);
   }
 
@@ -5649,18 +5642,18 @@ exports.SourceMapGenerator = SourceMapGenerator;
   var continuation, digit;
 
   do {
-if (aIndex &#x3e;= strLen) {
-  throw new Error(&#x22;Expected more digits in base 64 VLQ value.&#x22;);
+if (aIndex &gt;= strLen) {
+  throw new Error("Expected more digits in base 64 VLQ value.");
 }
 
 digit = base64.<span class="apidocCodeKeywordSpan">decode</span>(aStr.charCodeAt(aIndex++));
 if (digit === -1) {
-  throw new Error(&#x22;Invalid base64 digit: &#x22; + aStr.charAt(aIndex - 1));
+  throw new Error("Invalid base64 digit: " + aStr.charAt(aIndex - 1));
 }
 
-continuation = !!(digit &#x26; VLQ_CONTINUATION_BIT);
-digit &#x26;= VLQ_BASE_MASK;
-result = result + (digit &#x3c;&#x3c; shift);
+continuation = !!(digit &amp; VLQ_CONTINUATION_BIT);
+digit &amp;= VLQ_BASE_MASK;
+result = result + (digit &lt;&lt; shift);
 ...</pre></li>
     </ul>
 
@@ -5674,21 +5667,21 @@ result = result + (digit &#x3c;&#x3c; shift);
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">encode = function (number) {
-  if (0 &#x3c;= number &#x26;&#x26; number &#x3c; intToCharMap.length) {
+  if (0 &lt;= number &amp;&amp; number &lt; intToCharMap.length) {
     return intToCharMap[number];
   }
-  throw new TypeError(&#x22;Must be between 0 and 63: &#x22; + number);
+  throw new TypeError("Must be between 0 and 63: " + number);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-   digit = vlq &#x26; VLQ_BASE_MASK;
-   vlq &#x3e;&#x3e;&#x3e;= VLQ_BASE_SHIFT;
-   if (vlq &#x3e; 0) {
+   digit = vlq &amp; VLQ_BASE_MASK;
+   vlq &gt;&gt;&gt;= VLQ_BASE_SHIFT;
+   if (vlq &gt; 0) {
      // There are still more digits in this value, so we must make sure the
      // continuation bit is marked.
      digit |= VLQ_CONTINUATION_BIT;
    }
    encoded += base64.<span class="apidocCodeKeywordSpan">encode</span>(digit);
- } while (vlq &#x3e; 0);
+ } while (vlq &gt; 0);
 
  return encoded;
 };
@@ -5719,18 +5712,18 @@ result = result + (digit &#x3c;&#x3c; shift);
   var continuation, digit;
 
   do {
-    if (aIndex &#x3e;= strLen) {
-      throw new Error(&#x22;Expected more digits in base 64 VLQ value.&#x22;);
+    if (aIndex &gt;= strLen) {
+      throw new Error("Expected more digits in base 64 VLQ value.");
     }
 
     digit = base64.decode(aStr.charCodeAt(aIndex++));
     if (digit === -1) {
-      throw new Error(&#x22;Invalid base64 digit: &#x22; + aStr.charAt(aIndex - 1));
+      throw new Error("Invalid base64 digit: " + aStr.charAt(aIndex - 1));
     }
 
-    continuation = !!(digit &#x26; VLQ_CONTINUATION_BIT);
-    digit &#x26;= VLQ_BASE_MASK;
-    result = result + (digit &#x3c;&#x3c; shift);
+    continuation = !!(digit &amp; VLQ_CONTINUATION_BIT);
+    digit &amp;= VLQ_BASE_MASK;
+    result = result + (digit &lt;&lt; shift);
     shift += VLQ_BASE_SHIFT;
   } while (continuation);
 
@@ -5741,18 +5734,18 @@ result = result + (digit &#x3c;&#x3c; shift);
   var continuation, digit;
 
   do {
-if (aIndex &#x3e;= strLen) {
-  throw new Error(&#x22;Expected more digits in base 64 VLQ value.&#x22;);
+if (aIndex &gt;= strLen) {
+  throw new Error("Expected more digits in base 64 VLQ value.");
 }
 
 digit = base64.<span class="apidocCodeKeywordSpan">decode</span>(aStr.charCodeAt(aIndex++));
 if (digit === -1) {
-  throw new Error(&#x22;Invalid base64 digit: &#x22; + aStr.charAt(aIndex - 1));
+  throw new Error("Invalid base64 digit: " + aStr.charAt(aIndex - 1));
 }
 
-continuation = !!(digit &#x26; VLQ_CONTINUATION_BIT);
-digit &#x26;= VLQ_BASE_MASK;
-result = result + (digit &#x3c;&#x3c; shift);
+continuation = !!(digit &amp; VLQ_CONTINUATION_BIT);
+digit &amp;= VLQ_BASE_MASK;
+result = result + (digit &lt;&lt; shift);
 ...</pre></li>
     </ul>
 
@@ -5766,34 +5759,34 @@ result = result + (digit &#x3c;&#x3c; shift);
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function base64VLQ_encode(aValue) {
-  var encoded = &#x22;&#x22;;
+  var encoded = "";
   var digit;
 
   var vlq = toVLQSigned(aValue);
 
   do {
-    digit = vlq &#x26; VLQ_BASE_MASK;
-    vlq &#x3e;&#x3e;&#x3e;= VLQ_BASE_SHIFT;
-    if (vlq &#x3e; 0) {
+    digit = vlq &amp; VLQ_BASE_MASK;
+    vlq &gt;&gt;&gt;= VLQ_BASE_SHIFT;
+    if (vlq &gt; 0) {
       // There are still more digits in this value, so we must make sure the
       // continuation bit is marked.
       digit |= VLQ_CONTINUATION_BIT;
     }
     encoded += base64.encode(digit);
-  } while (vlq &#x3e; 0);
+  } while (vlq &gt; 0);
 
   return encoded;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-   digit = vlq &#x26; VLQ_BASE_MASK;
-   vlq &#x3e;&#x3e;&#x3e;= VLQ_BASE_SHIFT;
-   if (vlq &#x3e; 0) {
+   digit = vlq &amp; VLQ_BASE_MASK;
+   vlq &gt;&gt;&gt;= VLQ_BASE_SHIFT;
+   if (vlq &gt; 0) {
      // There are still more digits in this value, so we must make sure the
      // continuation bit is marked.
      digit |= VLQ_CONTINUATION_BIT;
    }
    encoded += base64.<span class="apidocCodeKeywordSpan">encode</span>(digit);
- } while (vlq &#x3e; 0);
+ } while (vlq &gt; 0);
 
  return encoded;
 };
@@ -5824,14 +5817,14 @@ result = result + (digit &#x3c;&#x3c; shift);
 
   var index = recursiveSearch(-1, aHaystack.length, aNeedle, aHaystack,
                               aCompare, aBias || exports.GREATEST_LOWER_BOUND);
-  if (index &#x3c; 0) {
+  if (index &lt; 0) {
     return -1;
   }
 
   // We have found either the exact element, or the next-closest element than
   // the one we are searching for. However, there may be more than one such
   // element. Make sure we always return the smallest of these.
-  while (index - 1 &#x3e;= 0) {
+  while (index - 1 &gt;= 0) {
     if (aCompare(aHaystack[index], aHaystack[index - 1], true) !== 0) {
       break;
     }
@@ -5843,8 +5836,8 @@ result = result + (digit &#x3c;&#x3c; shift);
     <li>example usage<pre class="apidocCodePre">...
                           + aNeedle[aLineName]);
     }
-    if (aNeedle[aColumnName] &#x3c; 0) {
-      throw new TypeError(&#x27;Column must be greater than or equal to 0, got &#x27;
+    if (aNeedle[aColumnName] &lt; 0) {
+      throw new TypeError('Column must be greater than or equal to 0, got '
                           + aNeedle[aColumnName]);
     }
 
@@ -5922,30 +5915,30 @@ BasicSourceMapConsumer.prototype.computeColumnSpans =
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function BasicSourceMapConsumer(aSourceMap) {
   var sourceMap = aSourceMap;
-  if (typeof aSourceMap === &#x27;string&#x27;) {
-    sourceMap = JSON.parse(aSourceMap.replace(/^\)\]\}&#x27;/, &#x27;&#x27;));
+  if (typeof aSourceMap === 'string') {
+    sourceMap = JSON.parse(aSourceMap.replace(/^\)\]\}'/, ''));
   }
 
-  var version = util.getArg(sourceMap, &#x27;version&#x27;);
-  var sources = util.getArg(sourceMap, &#x27;sources&#x27;);
-  // Sass 3.3 leaves out the &#x27;names&#x27; array, so we deviate from the spec (which
+  var version = util.getArg(sourceMap, 'version');
+  var sources = util.getArg(sourceMap, 'sources');
+  // Sass 3.3 leaves out the 'names' array, so we deviate from the spec (which
   // requires the array) to play nice here.
-  var names = util.getArg(sourceMap, &#x27;names&#x27;, []);
-  var sourceRoot = util.getArg(sourceMap, &#x27;sourceRoot&#x27;, null);
-  var sourcesContent = util.getArg(sourceMap, &#x27;sourcesContent&#x27;, null);
-  var mappings = util.getArg(sourceMap, &#x27;mappings&#x27;);
-  var file = util.getArg(sourceMap, &#x27;file&#x27;, null);
+  var names = util.getArg(sourceMap, 'names', []);
+  var sourceRoot = util.getArg(sourceMap, 'sourceRoot', null);
+  var sourcesContent = util.getArg(sourceMap, 'sourcesContent', null);
+  var mappings = util.getArg(sourceMap, 'mappings');
+  var file = util.getArg(sourceMap, 'file', null);
 
   // Once again, Sass deviates from the spec and supplies the version as a
   // string rather than a number, so we use loose equality checking here.
   if (version != this._version) {
-    throw new Error(&#x27;Unsupported version: &#x27; + version);
+    throw new Error('Unsupported version: ' + version);
   }
 
   sources = sources
     .map(String)
-    // Some source maps produce relative source paths like &#x22;./foo.js&#x22; instead of
-    // &#x22;foo.js&#x22;.  Normalize these first so that future comparisons will succeed.
+    // Some source maps produce relative source paths like "./foo.js" instead of
+    // "foo.js".  Normalize these first so that future comparisons will succeed.
     // See bugzil.la/1090768.
     .map(util.normalize)
     // Always ensure that absolute sources are internally stored relative to
@@ -5953,7 +5946,7 @@ BasicSourceMapConsumer.prototype.computeColumnSpans =
     // be particularly problematic when the source root is a prefix of the
     // source (valid, but why??). See github issue #199 and bugzil.la/1188982.
     .map(function (source) {
-      return sourceRoot &#x26;&#x26; util.isAbsolute(sourceRoot) &#x26;&#x26; util.isAbsolute(source)
+      return sourceRoot &amp;&amp; util.isAbsolute(sourceRoot) &amp;&amp; util.isAbsolute(source)
         ? util.relative(sourceRoot, source)
         : source;
     });
@@ -5984,15 +5977,15 @@ BasicSourceMapConsumer.prototype.computeColumnSpans =
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function IndexedSourceMapConsumer(aSourceMap) {
   var sourceMap = aSourceMap;
-  if (typeof aSourceMap === &#x27;string&#x27;) {
-    sourceMap = JSON.parse(aSourceMap.replace(/^\)\]\}&#x27;/, &#x27;&#x27;));
+  if (typeof aSourceMap === 'string') {
+    sourceMap = JSON.parse(aSourceMap.replace(/^\)\]\}'/, ''));
   }
 
-  var version = util.getArg(sourceMap, &#x27;version&#x27;);
-  var sections = util.getArg(sourceMap, &#x27;sections&#x27;);
+  var version = util.getArg(sourceMap, 'version');
+  var sections = util.getArg(sourceMap, 'sections');
 
   if (version != this._version) {
-    throw new Error(&#x27;Unsupported version: &#x27; + version);
+    throw new Error('Unsupported version: ' + version);
   }
 
   this._sources = new ArraySet();
@@ -6006,15 +5999,15 @@ BasicSourceMapConsumer.prototype.computeColumnSpans =
     if (s.url) {
       // The url field will require support for asynchronicity.
       // See https://github.com/mozilla/source-map/issues/16
-      throw new Error(&#x27;Support for url field in sections not implemented.&#x27;);
+      throw new Error('Support for url field in sections not implemented.');
     }
-    var offset = util.getArg(s, &#x27;offset&#x27;);
-    var offsetLine = util.getArg(offset, &#x27;line&#x27;);
-    var offsetColumn = util.getArg(offset, &#x27;column&#x27;);
+    var offset = util.getArg(s, 'offset');
+    var offsetLine = util.getArg(offset, 'line');
+    var offsetColumn = util.getArg(offset, 'column');
 
-    if (offsetLine &#x3c; lastOffset.line ||
-        (offsetLine === lastOffset.line &#x26;&#x26; offsetColumn &#x3c; lastOffset.column)) {
-      throw new Error(&#x27;Section offsets must be ordered and non-overlapping.&#x27;);
+    if (offsetLine &lt; lastOffset.line ||
+        (offsetLine === lastOffset.line &amp;&amp; offsetColumn &lt; lastOffset.column)) {
+      throw new Error('Section offsets must be ordered and non-overlapping.');
     }
     lastOffset = offset;
 
@@ -6025,7 +6018,7 @@ BasicSourceMapConsumer.prototype.computeColumnSpans =
         generatedLine: offsetLine + 1,
         generatedColumn: offsetColumn + 1
       },
-      consumer: new SourceMapConsumer(util.getArg(s, &#x27;map&#x27;))
+      consumer: new SourceMapConsumer(util.getArg(s, 'map'))
     }
   });
 }</pre></li>
@@ -6043,8 +6036,8 @@ BasicSourceMapConsumer.prototype.computeColumnSpans =
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function SourceMapConsumer(aSourceMap) {
   var sourceMap = aSourceMap;
-  if (typeof aSourceMap === &#x27;string&#x27;) {
-    sourceMap = JSON.parse(aSourceMap.replace(/^\)\]\}&#x27;/, &#x27;&#x27;));
+  if (typeof aSourceMap === 'string') {
+    sourceMap = JSON.parse(aSourceMap.replace(/^\)\]\}'/, ''));
   }
 
   return sourceMap.sections != null
@@ -6087,9 +6080,9 @@ inclusive.
   if (!aArgs) {
     aArgs = {};
   }
-  this._file = util.getArg(aArgs, &#x27;file&#x27;, null);
-  this._sourceRoot = util.getArg(aArgs, &#x27;sourceRoot&#x27;, null);
-  this._skipValidation = util.getArg(aArgs, &#x27;skipValidation&#x27;, false);
+  this._file = util.getArg(aArgs, 'file', null);
+  this._sourceRoot = util.getArg(aArgs, 'sourceRoot', null);
+  this._skipValidation = util.getArg(aArgs, 'skipValidation', false);
   this._sources = new ArraySet();
   this._names = new ArraySet();
   this._mappings = new MappingList();
@@ -6104,8 +6097,8 @@ inclusive.
 
 ```js
 var generator = new sourceMap.<span class="apidocCodeKeywordSpan">SourceMapGenerator</span>({
-  file: &#x22;my-generated-javascript-file.js&#x22;,
-  sourceRoot: &#x22;http://example.com/app/js/&#x22;
+  file: "my-generated-javascript-file.js",
+  sourceRoot: "http://example.com/app/js/"
 });
 ```
 
@@ -6229,8 +6222,8 @@ function generatedPositionAfter(mappingA, mappingB) {
  var lineB = mappingB.generatedLine;
  var columnA = mappingA.generatedColumn;
  var columnB = mappingB.generatedColumn;
- return lineB &#x3e; lineA || lineB == lineA &#x26;&#x26; columnB &#x3e;= columnA ||
-        util.<span class="apidocCodeKeywordSpan">compareByGeneratedPositionsInflated</span>(mappingA, mappingB) &#x3c;= 0;
+ return lineB &gt; lineA || lineB == lineA &amp;&amp; columnB &gt;= columnA ||
+        util.<span class="apidocCodeKeywordSpan">compareByGeneratedPositionsInflated</span>(mappingA, mappingB) &lt;= 0;
 }
 
 /**
@@ -6300,7 +6293,7 @@ function generatedPositionAfter(mappingA, mappingB) {
    }
 
    var sources = Object.keys(this.sourceContents);
-   for (var i = 0, len = sources.length; i &#x3c; len; i++) {
+   for (var i = 0, len = sources.length; i &lt; len; i++) {
      aFn(util.<span class="apidocCodeKeywordSpan">fromSetString</span>(sources[i]), this.sourceContents[sources[i]]);
    }
  };
@@ -6327,7 +6320,7 @@ function generatedPositionAfter(mappingA, mappingB) {
   } else if (arguments.length === 3) {
     return aDefaultValue;
   } else {
-    throw new Error(&#x27;&#x22;&#x27; + aName + &#x27;&#x22; is a required argument.&#x27;);
+    throw new Error('"' + aName + '" is a required argument.');
   }
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
@@ -6338,14 +6331,14 @@ function generatedPositionAfter(mappingA, mappingB) {
  */
 SourceMapConsumer.prototype.allGeneratedPositionsFor =
   function SourceMapConsumer_allGeneratedPositionsFor(aArgs) {
-var line = util.<span class="apidocCodeKeywordSpan">getArg</span>(aArgs, &#x27;line&#x27;);
+var line = util.<span class="apidocCodeKeywordSpan">getArg</span>(aArgs, 'line');
 
 // When there is no exact match, BasicSourceMapConsumer.prototype._findMapping
 // returns the index of the closest mapping less than the needle. By
 // setting needle.originalColumn to 0, we thus find the last mapping for
 // the given line, provided such a mapping exists.
 var needle = {
-  source: util.getArg(aArgs, &#x27;source&#x27;),
+  source: util.getArg(aArgs, 'source'),
 ...</pre></li>
     </ul>
 
@@ -6359,7 +6352,7 @@ var needle = {
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">isAbsolute = function (aPath) {
-  return aPath.charAt(0) === &#x27;/&#x27; || !!aPath.match(urlRegexp);
+  return aPath.charAt(0) === '/' || !!aPath.match(urlRegexp);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
   // See bugzil.la/1090768.
@@ -6369,7 +6362,7 @@ var needle = {
   // be particularly problematic when the source root is a prefix of the
   // source (valid, but why??). See github issue #199 and bugzil.la/1188982.
   .map(function (source) {
-    return sourceRoot &#x26;&#x26; util.<span class="apidocCodeKeywordSpan">isAbsolute</span>(sourceRoot) &#x26;&#x26; util.isAbsolute
+    return sourceRoot &amp;&amp; util.<span class="apidocCodeKeywordSpan">isAbsolute</span>(sourceRoot) &amp;&amp; util.isAbsolute
 (source)
       ? util.relative(sourceRoot, source)
       : source;
@@ -6391,20 +6384,20 @@ var needle = {
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function join(aRoot, aPath) {
-  if (aRoot === &#x22;&#x22;) {
-    aRoot = &#x22;.&#x22;;
+  if (aRoot === "") {
+    aRoot = ".";
   }
-  if (aPath === &#x22;&#x22;) {
-    aPath = &#x22;.&#x22;;
+  if (aPath === "") {
+    aPath = ".";
   }
   var aPathUrl = urlParse(aPath);
   var aRootUrl = urlParse(aRoot);
   if (aRootUrl) {
-    aRoot = aRootUrl.path || &#x27;/&#x27;;
+    aRoot = aRootUrl.path || '/';
   }
 
-  // `join(foo, &#x27;//www.example.org&#x27;)`
-  if (aPathUrl &#x26;&#x26; !aPathUrl.scheme) {
+  // `join(foo, '//www.example.org')`
+  if (aPathUrl &amp;&amp; !aPathUrl.scheme) {
     if (aRootUrl) {
       aPathUrl.scheme = aRootUrl.scheme;
     }
@@ -6415,15 +6408,15 @@ var needle = {
     return aPath;
   }
 
-  // `join(&#x27;http://&#x27;, &#x27;www.example.com&#x27;)`
-  if (aRootUrl &#x26;&#x26; !aRootUrl.host &#x26;&#x26; !aRootUrl.path) {
+  // `join('http://', 'www.example.com')`
+  if (aRootUrl &amp;&amp; !aRootUrl.host &amp;&amp; !aRootUrl.path) {
     aRootUrl.host = aPath;
     return urlGenerate(aRootUrl);
   }
 
-  var joined = aPath.charAt(0) === &#x27;/&#x27;
+  var joined = aPath.charAt(0) === '/'
     ? aPath
-    : normalize(aRoot.replace(/\/+$/, &#x27;&#x27;) + &#x27;/&#x27; + aPath);
+    : normalize(aRoot.replace(/\/+$/, '') + '/' + aPath);
 
   if (aRootUrl) {
     aRootUrl.path = joined;
@@ -6447,7 +6440,7 @@ var needle = {
     - [SourceNode.prototype.toStringWithSourceMap([startOfSourceMap])](#sourcenodeprototypetostringwithsourcemapstartofsourcemap
 )
 
-&#x3c;!-- END doctoc generated TOC please keep comment here to allow auto update --&#x3e;
+&lt;!-- END doctoc generated TOC please keep comment here to allow auto update --&gt;
 
 ## Examples
 ...</pre></li>
@@ -6474,16 +6467,16 @@ var needle = {
   var isAbsolute = exports.isAbsolute(path);
 
   var parts = path.split(/\/+/);
-  for (var part, up = 0, i = parts.length - 1; i &#x3e;= 0; i--) {
+  for (var part, up = 0, i = parts.length - 1; i &gt;= 0; i--) {
     part = parts[i];
-    if (part === &#x27;.&#x27;) {
+    if (part === '.') {
       parts.splice(i, 1);
-    } else if (part === &#x27;..&#x27;) {
+    } else if (part === '..') {
       up++;
-    } else if (up &#x3e; 0) {
-      if (part === &#x27;&#x27;) {
+    } else if (up &gt; 0) {
+      if (part === '') {
         // The first part is blank if the path is absolute. Trying to go
-        // above the root is a no-op. Therefore we can remove all &#x27;..&#x27; parts
+        // above the root is a no-op. Therefore we can remove all '..' parts
         // directly after the root.
         parts.splice(i + 1, up);
         up = 0;
@@ -6493,10 +6486,10 @@ var needle = {
       }
     }
   }
-  path = parts.join(&#x27;/&#x27;);
+  path = parts.join('/');
 
-  if (path === &#x27;&#x27;) {
-    path = isAbsolute ? &#x27;/&#x27; : &#x27;.&#x27;;
+  if (path === '') {
+    path = isAbsolute ? '/' : '.';
   }
 
   if (url) {
@@ -6518,20 +6511,20 @@ var needle = {
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function relative(aRoot, aPath) {
-  if (aRoot === &#x22;&#x22;) {
-    aRoot = &#x22;.&#x22;;
+  if (aRoot === "") {
+    aRoot = ".";
   }
 
-  aRoot = aRoot.replace(/\/$/, &#x27;&#x27;);
+  aRoot = aRoot.replace(/\/$/, '');
 
   // It is possible for the path to be above the root. In this case, simply
-  // checking whether the root is a prefix of the path won&#x27;t work. Instead, we
+  // checking whether the root is a prefix of the path won't work. Instead, we
   // need to remove components from the root one by one, until either we find
   // a prefix that fits, or we run out of components to remove.
   var level = 0;
-  while (aPath.indexOf(aRoot + &#x27;/&#x27;) !== 0) {
-    var index = aRoot.lastIndexOf(&#x22;/&#x22;);
-    if (index &#x3c; 0) {
+  while (aPath.indexOf(aRoot + '/') !== 0) {
+    var index = aRoot.lastIndexOf("/");
+    if (index &lt; 0) {
       return aPath;
     }
 
@@ -6546,14 +6539,14 @@ var needle = {
     ++level;
   }
 
-  // Make sure we add a &#x22;../&#x22; for each component we removed from the root.
-  return Array(level + 1).join(&#x22;../&#x22;) + aPath.substr(aRoot.length + 1);
+  // Make sure we add a "../" for each component we removed from the root.
+  return Array(level + 1).join("../") + aPath.substr(aRoot.length + 1);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
 var needle = {
-  source: util.getArg(aArgs, &#x27;source&#x27;),
+  source: util.getArg(aArgs, 'source'),
   originalLine: line,
-  originalColumn: util.getArg(aArgs, &#x27;column&#x27;, 0)
+  originalColumn: util.getArg(aArgs, 'column', 0)
 };
 
 if (this.sourceRoot != null) {
@@ -6609,19 +6602,19 @@ if (!isDuplicate) {
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function urlGenerate(aParsedUrl) {
-  var url = &#x27;&#x27;;
+  var url = '';
   if (aParsedUrl.scheme) {
-    url += aParsedUrl.scheme + &#x27;:&#x27;;
+    url += aParsedUrl.scheme + ':';
   }
-  url += &#x27;//&#x27;;
+  url += '//';
   if (aParsedUrl.auth) {
-    url += aParsedUrl.auth + &#x27;@&#x27;;
+    url += aParsedUrl.auth + '@';
   }
   if (aParsedUrl.host) {
     url += aParsedUrl.host;
   }
   if (aParsedUrl.port) {
-    url += &#x22;:&#x22; + aParsedUrl.port
+    url += ":" + aParsedUrl.port
   }
   if (aParsedUrl.path) {
     url += aParsedUrl.path;
@@ -6661,14 +6654,14 @@ if (this._sources.has(aSource)) {
 
 var url;
 if (this.sourceRoot != null
-    &#x26;&#x26; (url = util.<span class="apidocCodeKeywordSpan">urlParse</span>(this.sourceRoot))) {
+    &amp;&amp; (url = util.<span class="apidocCodeKeywordSpan">urlParse</span>(this.sourceRoot))) {
   // XXX: file:// URIs and absolute paths lead to unexpected behavior for
   // many users. We can help them out when they expect file:// URIs to
   // behave like it would if they were running a local HTTP server. See
   // https://bugzilla.mozilla.org/show_bug.cgi?id=885597.
-  var fileUriAbsPath = aSource.replace(/^file:\/\//, &#x22;&#x22;);
-  if (url.scheme == &#x22;file&#x22;
-      &#x26;&#x26; this._sources.has(fileUriAbsPath)) {
+  var fileUriAbsPath = aSource.replace(/^file:\/\//, "");
+  if (url.scheme == "file"
+      &amp;&amp; this._sources.has(fileUriAbsPath)) {
 ...</pre></li>
     </ul>
 
@@ -6681,3 +6674,4 @@ if (this.sourceRoot != null
     ]
 </div>
 </div>
+</body></html>
