@@ -1,4 +1,7 @@
-# api documentation for  [source-map (v0.5.6)](https://github.com/mozilla/source-map)  [![npm package](https://img.shields.io/npm/v/npmdoc-source-map.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-source-map) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-source-map.svg)](https://travis-ci.org/npmdoc/node-npmdoc-source-map)
+# npmdoc-source-map
+
+#### basic api documentation for  [source-map (v0.5.6)](https://github.com/mozilla/source-map)  [![npm package](https://img.shields.io/npm/v/npmdoc-source-map.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-source-map) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-source-map.svg)](https://travis-ci.org/npmdoc/node-npmdoc-source-map)
+
 #### Generates and consumes source maps
 
 [![NPM](https://nodei.co/npm/source-map.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/source-map)
@@ -182,7 +185,8 @@
         "test": "npm run build && node test/run-tests.js",
         "toc": "doctoc --title '## Table of Contents' README.md && doctoc --title '## Table of Contents' CONTRIBUTING.md"
     },
-    "version": "0.5.6"
+    "version": "0.5.6",
+    "bin": {}
 }
 ```
 
